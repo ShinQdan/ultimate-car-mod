@@ -32,9 +32,12 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fluids.FluidActionResult;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.InvWrapper;
 
 import javax.annotation.Nullable;
 
@@ -101,7 +104,7 @@ public class BlockGasStation extends BlockOrientableHorizontal {
             FluidStack fluidStack = FluidUtil.getFluidContained(stack).orElse(FluidStack.EMPTY);
 
             if (!fluidStack.isEmpty()) {
-                boolean success = BlockTank.handleEmpty(stack, worldIn, pos, player, handIn);
+                boolean success = handleEmpty(stack, worldIn, pos, player, handIn);
                 if (success) {
                     return InteractionResult.SUCCESS;
                 }
@@ -109,7 +112,7 @@ public class BlockGasStation extends BlockOrientableHorizontal {
             IFluidHandler handler = FluidUtil.getFluidHandler(stack).orElse(null);
 
             if (handler != null) {
-                boolean success1 = BlockTank.handleFill(stack, worldIn, pos, player, handIn);
+                boolean success1 = handleFill(stack, worldIn, pos, player, handIn);
                 if (success1) {
                     return InteractionResult.SUCCESS;
                 }
@@ -130,6 +133,47 @@ public class BlockGasStation extends BlockOrientableHorizontal {
         return InteractionResult.FAIL;
     }
 
+    public static boolean handleEmpty(ItemStack stack, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand) {
+        BlockEntity te = worldIn.getBlockEntity(pos);
+
+        if (!(te instanceof IFluidHandler)) {
+            return false;
+        }
+
+        IFluidHandler handler = (IFluidHandler) te;
+
+        IItemHandler inv = new InvWrapper(playerIn.getInventory());
+
+        FluidActionResult res = FluidUtil.tryEmptyContainerAndStow(stack, handler, inv, Integer.MAX_VALUE, playerIn, true);
+
+        if (res.isSuccess()) {
+            playerIn.setItemInHand(hand, res.result);
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean handleFill(ItemStack stack, Level worldIn, BlockPos pos, Player playerIn, InteractionHand hand) {
+        BlockEntity te = worldIn.getBlockEntity(pos);
+
+        if (!(te instanceof IFluidHandler)) {
+            return false;
+        }
+
+        IFluidHandler blockHandler = (IFluidHandler) te;
+
+        IItemHandler inv = new InvWrapper(playerIn.getInventory());
+
+        FluidActionResult result = FluidUtil.tryFillContainerAndStow(stack, blockHandler, inv, Integer.MAX_VALUE, playerIn, true);
+
+        if (result.isSuccess()) {
+            playerIn.setItemInHand(hand, result.result);
+            return true;
+        }
+
+        return false;
+    }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {

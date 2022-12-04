@@ -1,24 +1,18 @@
 package de.maxhenkel.car.items;
 
-import de.maxhenkel.car.Main;
-import de.maxhenkel.car.entity.car.parts.PartRegistry;
-import de.maxhenkel.car.fluids.ModFluids;
-import de.maxhenkel.corelib.reflection.ReflectionUtils;
-import de.maxhenkel.tools.NoRegister;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.maxhenkel.car.entity.car.parts.PartRegistry;
+import de.maxhenkel.corelib.reflection.ReflectionUtils;
+import de.maxhenkel.tools.NoRegister;
+import net.minecraft.world.item.Item;
 
 public class ModItems {
 
     public static final ItemPainter PAINTER = new ItemPainter(false);
     public static final ItemPainter PAINTER_YELLOW = new ItemPainter(true);
-    public static final ItemCanolaSeed CANOLA_SEEDS = new ItemCanolaSeed();
-    public static final ItemCanola CANOLA = new ItemCanola();
-    public static final ItemCanolaCake CANOLA_CAKE = new ItemCanolaCake();
     public static final ItemCraftingComponent IRON_STICK = new ItemCraftingComponent("iron_stick");
     public static final ItemCraftingComponent ENGINE_PISTON = new ItemCraftingComponent("engine_piston");
     public static final ItemCanister CANISTER = new ItemCanister();
@@ -26,7 +20,7 @@ public class ModItems {
     public static final ItemRepairTool WRENCH = new ItemRepairTool("wrench");
     public static final ItemRepairTool SCREW_DRIVER = new ItemRepairTool("screw_driver");
     public static final ItemRepairTool HAMMER = new ItemRepairTool("hammer");
-    public static final ItemCraftingComponent CABLE_INSULATOR = new ItemCraftingComponent("cable_insulator");
+//     public static final ItemCraftingComponent CABLE_INSULATOR = new ItemCraftingComponent("cable_insulator");
     public static final ItemKey KEY = new ItemKey();
     public static final ItemBattery BATTERY = new ItemBattery();
     public static final ItemGuardRail GUARD_RAIL = new ItemGuardRail();
@@ -216,13 +210,6 @@ public class ModItems {
     public static final ItemCarPart SMALL_TANK = new ItemCarPart("small_tank", PartRegistry.SMALL_TANK);
     public static final ItemCarPart MEDIUM_TANK = new ItemCarPart("medium_tank", PartRegistry.MEDIUM_TANK);
     public static final ItemCarPart LARGE_TANK = new ItemCarPart("large_tank", PartRegistry.LARGE_TANK);
-
-
-    public static final CarBucketItem CANOLA_OIL_BUCKET = new CarBucketItem(ModFluids.CANOLA_OIL, new ResourceLocation(Main.MODID, "canola_oil_bucket"));
-    public static final CarBucketItem METHANOL_BUCKET = new CarBucketItem(ModFluids.METHANOL, new ResourceLocation(Main.MODID, "methanol_bucket"));
-    public static final CarBucketItem CANOLA_METHANOL_MIX_BUCKET = new CarBucketItem(ModFluids.CANOLA_METHANOL_MIX, new ResourceLocation(Main.MODID, "canola_methanol_mix_bucket"));
-    public static final CarBucketItem GLYCERIN_BUCKET = new CarBucketItem(ModFluids.GLYCERIN, new ResourceLocation(Main.MODID, "glycerin_bucket"));
-    public static final CarBucketItem BIO_DIESEL_BUCKET = new CarBucketItem(ModFluids.BIO_DIESEL, new ResourceLocation(Main.MODID, "bio_diesel_bucket"));
 
     public static List<Item> getAll() {
         List<Item> items = new ArrayList<>();

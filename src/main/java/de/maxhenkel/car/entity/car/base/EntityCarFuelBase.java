@@ -3,7 +3,6 @@ package de.maxhenkel.car.entity.car.base;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import de.maxhenkel.car.fluids.ModFluids;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -13,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -168,7 +168,7 @@ public abstract class EntityCarFuelBase extends EntityCarDamageBase implements I
     public FluidStack getFluidInTank(int tank) {
         Fluid f = getFluid();
         if (f == null) {
-            return new FluidStack(ModFluids.BIO_DIESEL, getFuelAmount());
+            return new FluidStack(Fluids.EMPTY, getFuelAmount());
         } else {
             return new FluidStack(f, getFuelAmount());
         }

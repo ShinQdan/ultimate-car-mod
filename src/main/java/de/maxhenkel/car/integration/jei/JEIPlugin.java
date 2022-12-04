@@ -43,12 +43,8 @@ public class JEIPlugin implements IModPlugin {
         registration.addIngredientInfo(new ItemStack(ModItems.PAINTER_YELLOW), VanillaTypes.ITEM, new TranslatableComponent("description.painter_yellow"));
         registration.addIngredientInfo(new ItemStack(ModItems.CANISTER), VanillaTypes.ITEM, new TranslatableComponent("description.canister"));
         registration.addIngredientInfo(new ItemStack(ModItems.REPAIR_KIT), VanillaTypes.ITEM, new TranslatableComponent("description.repair_kit"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.CRANK), VanillaTypes.ITEM, new TranslatableComponent("description.crank"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.DYNAMO), VanillaTypes.ITEM, new TranslatableComponent("description.dynamo"));
         registration.addIngredientInfo(new ItemStack(ModBlocks.GAS_STATION), VanillaTypes.ITEM, new TranslatableComponent("description.fuel_station"));
         registration.addIngredientInfo(new ItemStack(ModBlocks.GAS_STATION), VanillaTypes.ITEM, new TranslatableComponent("description.fuel_station_admin"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.TANK), VanillaTypes.ITEM, new TranslatableComponent("description.tank"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.FLUID_EXTRACTOR), VanillaTypes.ITEM, new TranslatableComponent("description.fluid_extractor"));
         registration.addIngredientInfo(new ItemStack(ModItems.BATTERY), VanillaTypes.ITEM, new TranslatableComponent("description.battery"));
         registration.addIngredientInfo(Arrays.stream(ModItems.CONTAINERS).map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslatableComponent("description.container"));
         registration.addIngredientInfo(Arrays.stream(ModItems.TANK_CONTAINERS).map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslatableComponent("description.tank_container"));

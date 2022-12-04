@@ -22,10 +22,6 @@ public class VillagerEvents {
     @SubscribeEvent
     public void villagerTrades(VillagerTradesEvent event) {
         if (event.getType().equals(Main.VILLAGER_PROFESSION_GAS_STATION_ATTENDANT)) {
-            event.getTrades().put(1, ImmutableList.of(
-                    new EmeraldForItemsTrade(ModItems.CANOLA, 20, 16, 2),
-                    new Trade(Items.EMERALD, 16, ModBlocks.ASPHALT, 4, 16, 2)
-            ));
             event.getTrades().put(2, ImmutableList.of(
                     new MultiTrade(
                             new Trade(Items.EMERALD, 8, ModItems.PAINTER, 1, 8, 3),

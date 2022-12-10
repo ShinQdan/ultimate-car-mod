@@ -88,6 +88,11 @@ dependencies {
     runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:${mod_minecraft_version}-${corelib_version}")
     runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:${mod_minecraft_version}-${corelib_version}:javadoc")
 
+    //immersive engineering
+    runtimeOnly fg.deobf("curse.maven:immersiveengineering-${ie_project_id}:${ie_file_id}")
+    //cc tweaked
+    runtimeOnly fg.deobf("curse.maven:cctweaked-${cct_project_id}:${cct_file_id}")
+
 //    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")
 //    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:additions")
 //    runtimeOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:generators")

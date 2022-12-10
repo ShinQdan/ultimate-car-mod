@@ -5,11 +5,11 @@ issueTrackerURL="https://github.com/henkelmax/ultimate-car-mod/issues"
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
-displayName="${mod_name}"
+displayName="${mod_name}-SE"
 updateJSONURL="https://maxhenkel.de/update/car.json"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/ultimate-car-mod"
-authors="${mod_vendor}"
-description='''This mod brings cars, road construction and biodiesel production into your Minecraft world'''
+authors="${mod_vendor}, Shin Q'dan (slim extended version)"
+description='''This mod brings cars and road construction into your Minecraft world. Slimmed down from fuel production functionality provided in other mods and extended by more advanced car behavior (acceleration, max speed) logic. Special thanks to KlaraAga.'''
 [[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true

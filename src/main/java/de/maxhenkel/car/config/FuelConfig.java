@@ -20,10 +20,10 @@ public class FuelConfig extends DynamicConfig {
     protected void setDefaults() {
         super.setDefaults();
         // addFuel(ModFluids.BIO_DIESEL, 100);
-        setObject("immersiveengineering:biodiesel", new Fuel("immersiveengineering:biodiesel", 100));
-        setObject("immersiveengineering:ethanol", new Fuel("immersiveengineering:ethanol", 50));
-        setObject("immersiveengineering:plantoil", new Fuel("immersiveengineering:plantoil", 70));
-        setObject("immersiveengineering:creosote", new Fuel("immersiveengineering:creosote", 25));
+        setObject("immersiveengineering:biodiesel", new Fuel("immersiveengineering:biodiesel", 8, 815, 0.6F, 0F));
+        setObject("immersiveengineering:ethanol", new Fuel("immersiveengineering:ethanol", 10, 789, 0.75F, 0F));
+        setObject("immersiveengineering:plantoil", new Fuel("immersiveengineering:plantoil", 6, 840, 0.2F, 0F));
+        setObject("immersiveengineering:creosote", new Fuel("immersiveengineering:creosote", 2, 1100, 0.25F, 0.4F));
     }
 
     @Override

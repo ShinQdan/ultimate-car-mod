@@ -83,6 +83,8 @@ public abstract class EntityCarBase extends EntityVehicleBase {
 
     public abstract float getPitch();
 
+    public abstract float getBrakeModifier();
+
     @Override
     public void tick() {
         super.tick();
@@ -206,8 +208,8 @@ public abstract class EntityCarBase extends EntityVehicleBase {
             setRight(false);
         }
 
+        //on-/offroad modifier
         float modifier = getModifier();
-
         float maxSp = getMaxSpeed() * modifier;
         float maxBackSp = getMaxReverseSpeed() * modifier;
 
@@ -220,7 +222,10 @@ public abstract class EntityCarBase extends EntityVehicleBase {
         }
 
         if (isBackward()) {
-            if (speed >= -maxBackSp) {
+            if(speed>0){
+                //just brake
+                speed -= 0.015*getBrakeModifier();
+            }else if(speed >= -maxBackSp) {
                 speed = Math.max(speed - getAcceleration(), -maxBackSp);
             }
         }
@@ -388,7 +393,7 @@ public abstract class EntityCarBase extends EntityVehicleBase {
     }
 
     public boolean isAccelerating() {
-        boolean b = (isForward() || isBackward()) && !horizontalCollision;
+        boolean b = (isForward() || (isBackward() && getSpeed()<=0)) && !horizontalCollision;
         return b && isStarted();
     }
 

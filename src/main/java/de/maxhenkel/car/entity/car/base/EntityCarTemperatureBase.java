@@ -27,28 +27,13 @@ public abstract class EntityCarTemperatureBase extends EntityCarBase {
             return;
         }
 
-        float speedPerc = getSpeed() / getMaxSpeed();
-
-        int tempRate = (int) (speedPerc * 10F) + 1;
-
-        if (tempRate > 5) {
-            tempRate = 5;
-        }
-
-        float rate = tempRate * 0.2F + (random.nextFloat() - 0.5F) * 0.1F;
-
         float temp = getTemperature();
 
         float tempToReach = getTemperatureToReach();
 
-        if (MathUtils.isInBounds(temp, tempToReach, rate)) {
-            setTemperature(tempToReach);
-        } else {
-            if (tempToReach < temp) {
-                rate = -rate;
-            }
-            setTemperature(temp + rate);
-        }
+        float change = (tempToReach-temp+random.nextFloat()-0.5F)/100;
+
+        setTemperature(temp+change);
     }
 
     public float getTemperatureToReach() {
@@ -57,14 +42,7 @@ public abstract class EntityCarTemperatureBase extends EntityCarBase {
         if (!isStarted()) {
             return biomeTemp;
         }
-        float optimalTemp = getOptimalTemperature();
-
-        if (biomeTemp > 45F) {
-            optimalTemp = 100F;
-        } else if (biomeTemp <= 0F) {
-            optimalTemp = 80F;
-        }
-        return Math.max(biomeTemp, optimalTemp);
+        return Math.max(biomeTemp, getOptimalTemperature());
     }
 
     public float getBiomeTemperatureCelsius() {

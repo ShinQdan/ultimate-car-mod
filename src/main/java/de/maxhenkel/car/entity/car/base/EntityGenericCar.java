@@ -33,6 +33,7 @@ import java.util.Random;
 public class EntityGenericCar extends EntityCarLicensePlateBase {
 
     private static final EntityDataAccessor<NonNullList<ItemStack>> PARTS = SynchedEntityData.defineId(EntityGenericCar.class, DataSerializerItemList.ITEM_LIST);
+    private static final float FUEL_USAGE_MODIFIER = 0.02F;
 
     private List<Part> parts;
 
@@ -69,6 +70,33 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
         return tank.getFluidAmount();
     }
 
+    protected float getFuelMassModifier(){
+        float fuelMassMod = 0.95F;
+        Fuel fuel = Main.FUEL_CONFIG.getFuels().getOrDefault(getFluid(), null);
+        if(fuel!=null){
+            fuelMassMod = 1F - ((0.00005F*fuel.getDensity()*getFuelAmount()/10000F));
+        }
+        return fuelMassMod;
+    }
+
+    protected float getFuelTypeModifier(){
+        float fuelTypeMod = 0.0F;
+        Fuel fuel = Main.FUEL_CONFIG.getFuels().getOrDefault(getFluid(), null);
+        if(fuel!=null){
+            fuelTypeMod = (float) (fuel.getMaxTorqueSpeed() - fuel.getReduction());
+        }
+        return 0.1F * fuelTypeMod;
+    }
+
+    public float getTemperatureModifier(){
+        float temp = Math.round(getTemperature());
+        float optimalTemp = getOptimalTemperature();
+        if(temp>optimalTemp){
+            temp -= 2 * (temp - optimalTemp);
+        }
+        return 1F - 0.05F * temp / optimalTemp;
+    }
+
     @Override
     public float getMaxSpeed() {
         PartEngine engine = getPartByClass(PartEngine.class);
@@ -79,7 +107,8 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
         if (chassis == null) {
             return 0F;
         }
-        return engine.getMaxSpeed() * chassis.getMaxSpeed();
+        
+        return (engine.getMaxSpeed() * chassis.getMaxSpeed() + getFuelTypeModifier()) * (1F-getDamage()/100F);
     }
 
     @Override
@@ -89,6 +118,33 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
             return 0F;
         }
         return engine.getMaxReverseSpeed();
+    }
+
+    protected static final float
+        a2 = 1.7F,
+        a1 = (-0.232F*a2-0.8F)/(-0.424F),
+        b1 = -1.8F*a1,
+        b2 = -2.1F*a2,
+        c1 = 0.6F*a1,
+        c2 = 1.2F*a2,
+        d1 = 1F-0.056F*a1,
+        d2 = 0.8F-0.208F*a2;
+
+    protected float getFuelAccelerationModifier(){
+        float modifier = 0.5F;
+        Fuel fuel = Main.FUEL_CONFIG.getFuels().getOrDefault(getFluid(), null);
+        if(fuel!=null){
+            float mts = (float) (2.5*fuel.getMaxTorqueSpeed()-0.5);
+            float inm = (float) (-0.01*Math.pow(mts-0.5,2)+1);
+            float spc = getSpeed()/getMaxSpeed();
+            modifier = (float)(
+                (a1 + mts*(inm*a2-a1))*Math.pow(spc,3)
+                + (b1 + mts*(inm*b2-b1))*Math.pow(spc,3)
+                + (c1 + mts*(inm*c2-c1))*Math.pow(spc,3)
+                + (d1 + mts*(inm*d2-d1)) /*+ 0.4F*/ - fuel.getReduction()
+            );
+        }
+        return modifier;
     }
 
     @Override
@@ -101,7 +157,8 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
         if (chassis == null) {
             return 0F;
         }
-        return engine.getAcceleration() * chassis.getAcceleration();
+        
+        return engine.getAcceleration() * chassis.getAcceleration() * getFuelMassModifier() * getFuelAccelerationModifier() * getTemperatureModifier();
     }
 
     @Override
@@ -124,7 +181,15 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
 
     @Override
     public float getRollResistance() {
-        return 0.02F;
+        //default 0.02
+        return 0.005F;
+    }
+
+    @Override
+    public float getBrakeModifier(){
+        PartBody chassis = getPartByClass(PartBody.class);
+        if(chassis == null) return 1F;
+        else return chassis.getMaxSpeed();
     }
 
     @Override
@@ -142,7 +207,7 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
     }
 
     @Override
-    public int getEfficiency(@Nullable Fluid fluid) {
+    public float getFuelUsage(@Nullable Fluid fluid) {
         PartEngine engine = getPartByClass(PartEngine.class);
         if (engine == null) {
             return 0;
@@ -153,18 +218,18 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
             return 0;
         }
 
-        int fluidEfficiency = 0;
+        int fluidUsage = 0;
 
         if (fluid == null) {
-            fluidEfficiency = 100;
+            fluidUsage = 100;
         } else {
             Fuel fuel = Main.FUEL_CONFIG.getFuels().getOrDefault(fluid, null);
             if (fuel != null) {
-                fluidEfficiency = fuel.getEfficiency();
+                fluidUsage = fuel.getUsage();
             }
         }
 
-        return (int) Math.ceil(chassis.getFuelEfficiency() * engine.getFuelEfficiency() * (float) fluidEfficiency);
+        return FUEL_USAGE_MODIFIER * fluidUsage / (chassis.getFuelEfficiency() * engine.getFuelEfficiency());
     }
 
     @Override

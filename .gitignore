@@ -21,6 +21,7 @@ build
 eclipse
 run
 logs
+.vscode/
 
 curseforge_api_key.txt
 forge_update_api_key.txt

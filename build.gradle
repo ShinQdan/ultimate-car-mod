@@ -2,6 +2,7 @@ buildscript {
     repositories {
         maven { url = 'https://repo.spongepowered.org/maven' }
         maven { url = 'https://maven.maxhenkel.de/repository/public' }
+        maven { url = 'https://dvs1.progwml6.com/files/maven' }
         mavenCentral()
     }
     dependencies {
@@ -81,7 +82,13 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     minecraft "net.minecraftforge:forge:${mod_minecraft_version}-${forge_version}"
 
-    compileOnly fg.deobf("curse.maven:jei-238222:${jei_id}")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.2-forge-api:${jei_version}")
+    compileOnly fg.deobf("mezz.jei:jei-1.19.2-common-api:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-forge:${jei_version}")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.19.2-common:${jei_version}")
+    // runtimeOnly fg.deobf("curse.maven:jei-238222:${jei_id}")
+    // compileOnly fg.deobf("mezz.jei:jei-1.19.2:${jei_version}:api")
+    // runtimeOnly fg.deobf("mezz.jei:jei-1.19.2:${jei_version}")
 
     shadow fg.deobf("de.maxhenkel.corelib:corelib:${mod_minecraft_version}-${corelib_version}:api")
     runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:${mod_minecraft_version}-${corelib_version}")
@@ -90,6 +97,9 @@ dependencies {
     compileOnly fg.deobf("curse.maven:the-one-probe-245211:${theoneprobe_id}")
 
     compileOnly fg.deobf("curse.maven:jade-324717:${jade_id}")
+
+    //immersive engineering
+    runtimeOnly fg.deobf("curse.maven:immersiveengineering-231951:4370621")
 
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'

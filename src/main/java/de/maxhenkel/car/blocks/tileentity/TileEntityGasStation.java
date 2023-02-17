@@ -43,7 +43,7 @@ public class TileEntityGasStation extends TileEntityBase implements ITickableBlo
 
     private FluidStack storage;
 
-    public int maxStorageAmount = 16000;
+    public int maxStorageAmount = 20000;
 
     private final int transferRate;
 

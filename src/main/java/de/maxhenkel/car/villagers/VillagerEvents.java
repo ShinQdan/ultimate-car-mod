@@ -1,8 +1,10 @@
 package de.maxhenkel.car.villagers;
 
+import javax.annotation.Nullable;
+
 import com.google.common.collect.ImmutableList;
+
 import de.maxhenkel.car.Main;
-import de.maxhenkel.car.blocks.ModBlocks;
 import de.maxhenkel.car.items.ModItems;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -15,17 +17,11 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import javax.annotation.Nullable;
-
 public class VillagerEvents {
 
     @SubscribeEvent
     public void villagerTrades(VillagerTradesEvent event) {
         if (event.getType().equals(Main.VILLAGER_PROFESSION_GAS_STATION_ATTENDANT.get())) {
-            event.getTrades().put(1, ImmutableList.of(
-                    new EmeraldForItemsTrade(ModItems.CANOLA.get(), 20, 16, 2),
-                    new Trade(Items.EMERALD, 16, ModBlocks.ASPHALT.get(), 4, 16, 2)
-            ));
             event.getTrades().put(2, ImmutableList.of(
                     new MultiTrade(
                             new Trade(Items.EMERALD, 8, ModItems.PAINTER.get(), 1, 8, 3),

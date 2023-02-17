@@ -43,12 +43,8 @@ public class JEIPlugin implements IModPlugin {
         registration.addIngredientInfo(new ItemStack(ModItems.PAINTER_YELLOW.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.painter_yellow"));
         registration.addIngredientInfo(new ItemStack(ModItems.CANISTER.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.canister"));
         registration.addIngredientInfo(new ItemStack(ModItems.REPAIR_KIT.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.repair_kit"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.CRANK.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.crank"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.DYNAMO.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.dynamo"));
         registration.addIngredientInfo(new ItemStack(ModBlocks.GAS_STATION.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.fuel_station"));
         registration.addIngredientInfo(new ItemStack(ModBlocks.GAS_STATION.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.fuel_station_admin"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.TANK.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.tank"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.FLUID_EXTRACTOR.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.fluid_extractor"));
         registration.addIngredientInfo(new ItemStack(ModItems.BATTERY.get()), VanillaTypes.ITEM_STACK, Component.translatable("description.battery"));
         registration.addIngredientInfo(Arrays.stream(ModItems.CONTAINERS).map(e -> new ItemStack(e.get())).collect(Collectors.toList()), VanillaTypes.ITEM_STACK, Component.translatable("description.container"));
         registration.addIngredientInfo(Arrays.stream(ModItems.TANK_CONTAINERS).map(e -> new ItemStack(e.get())).collect(Collectors.toList()), VanillaTypes.ITEM_STACK, Component.translatable("description.tank_container"));

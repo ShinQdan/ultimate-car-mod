@@ -3,7 +3,6 @@ package de.maxhenkel.car.entity.car.base;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import de.maxhenkel.car.fluids.ModFluids;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -13,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,6 +21,8 @@ public abstract class EntityCarFuelBase extends EntityCarDamageBase implements I
 
     private static final EntityDataAccessor<Integer> FUEL_AMOUNT = SynchedEntityData.defineId(EntityCarFuelBase.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<String> FUEL_TYPE = SynchedEntityData.defineId(EntityCarFuelBase.class, EntityDataSerializers.STRING);
+
+    private float usage = 0F;
 
     public EntityCarFuelBase(EntityType type, Level worldIn) {
         super(type, worldIn);
@@ -37,27 +39,17 @@ public abstract class EntityCarFuelBase extends EntityCarDamageBase implements I
 
     protected void fuelTick() {
         int fuel = getFuelAmount();
-        int tickFuel = getEfficiency(getFluid());
-        if (tickFuel <= 0) {
-            return;
+        float fuelUsage = getFuelUsage(getFluid());
+        if(isAccelerating()){
+            usage += fuelUsage;
+        }else if(isStarted()){
+            usage += fuelUsage/10F;
         }
-        if (fuel > 0 && isAccelerating()) {
-            if (tickCount % tickFuel == 0) {
-                acceleratingFuelTick();
-            }
-        } else if (fuel > 0 && isStarted()) {
-            if (tickCount % (tickFuel * 100) == 0) {
-                idleFuelTick();
-            }
+        if(usage>1){
+            int currentUsage = (int) Math.floor(usage);
+            usage -= currentUsage;
+            removeFuel(currentUsage);
         }
-    }
-
-    protected void idleFuelTick() {
-        removeFuel(1);
-    }
-
-    protected void acceleratingFuelTick() {
-        removeFuel(1);
     }
 
     private void removeFuel(int amount) {
@@ -137,10 +129,10 @@ public abstract class EntityCarFuelBase extends EntityCarDamageBase implements I
         if (fluid == null) {
             return false;
         }
-        return getEfficiency(fluid) > 0;
+        return getFuelUsage(fluid) > 0;
     }
 
-    public abstract int getEfficiency(@Nullable Fluid fluid);
+    public abstract float getFuelUsage(@Nullable Fluid fluid);
 
     @Override
     protected void addAdditionalSaveData(CompoundTag compound) {
@@ -168,7 +160,7 @@ public abstract class EntityCarFuelBase extends EntityCarDamageBase implements I
     public FluidStack getFluidInTank(int tank) {
         Fluid f = getFluid();
         if (f == null) {
-            return new FluidStack(ModFluids.BIO_DIESEL.get(), getFuelAmount());
+            return new FluidStack(Fluids.EMPTY, getFuelAmount());
         } else {
             return new FluidStack(f, getFuelAmount());
         }

@@ -1,29 +1,24 @@
 package de.maxhenkel.car.items;
 
-import de.maxhenkel.car.Main;
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import de.maxhenkel.car.ModItemGroups;
-import de.maxhenkel.car.blocks.ModBlocks;
-import de.maxhenkel.corelib.energy.EnergyUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class ItemBattery extends Item {
 
@@ -42,26 +37,6 @@ public class ItemBattery extends Item {
     @Override
     public boolean isEnchantable(ItemStack stack) {
         return false;
-    }
-
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        if (context.getLevel().getBlockState(context.getClickedPos()).getBlock().equals(ModBlocks.GENERATOR.get())) {
-            IEnergyStorage storage = EnergyUtils.getEnergyStorage(context.getLevel(), context.getClickedPos(), context.getClickedFace());
-            if (storage != null) {
-                ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
-
-                int energyToFill = stack.getDamageValue();
-
-                int amount = storage.extractEnergy(energyToFill, false);
-
-                stack.setDamageValue(energyToFill - amount);
-                context.getPlayer().setItemInHand(context.getHand(), stack);
-                return InteractionResult.SUCCESS;
-            }
-        }
-
-        return super.useOn(context);
     }
 
     public int getEnergy(ItemStack stack) {

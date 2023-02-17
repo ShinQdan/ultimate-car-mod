@@ -8,8 +8,8 @@ version="${mod_version}"
 displayName="${mod_name}-SE"
 updateJSONURL="https://maxhenkel.de/update/car.json"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/ultimate-car-mod"
-authors="${mod_vendor}, Shin Q'dan (slim extended version)"
-description='''This mod brings cars and road construction into your Minecraft world. Slimmed down from fuel production functionality provided in other mods and extended by more advanced car behavior (acceleration, max speed) logic. Special thanks to KlaraAga.'''
+authors="${mod_vendor}, Shin Q'dan (slim enhanced version)"
+description='''This mod brings cars and road construction into your Minecraft world. Slimmed down from fuel production functionality provided in other mods and enhanced by more advanced car behavior (acceleration, max speed, etc) logic. Special thanks to KlaraAga.'''
 [[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true

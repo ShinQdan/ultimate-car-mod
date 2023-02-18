@@ -73,7 +73,11 @@ public class EntityGenericCar extends EntityCarLicensePlateBase {
         float fuelMassMod = 0.95F;
         Fuel fuel = Main.FUEL_CONFIG.getFuels().getOrDefault(getFluid(), null);
         if(fuel!=null){
-            fuelMassMod = 1F - ((0.00005F*fuel.getDensity()*getFuelAmount()/10000F));
+            //default
+            //fuelMassMod = 1F - ((0.00005F*fuel.getDensity()*getFuelAmount()/10000F));
+            
+            //for 25/50/75 bucket tanks
+            fuelMassMod = 1F - ((0.00001F*fuel.getDensity()*getFuelAmount()/10000F));
         }
         return fuelMassMod;
     }

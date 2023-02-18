@@ -78,7 +78,7 @@ public class ServerConfig extends ConfigBase {
 
     public ServerConfig(ForgeConfigSpec.Builder builder) {
         super(builder);
-        gasStationTransferRate = builder.defineInRange("machines.gas_station.transfer_rate", 50, 1, Short.MAX_VALUE);
+        gasStationTransferRate = builder.defineInRange("machines.gas_station.transfer_rate", 250, 1, Short.MAX_VALUE);
         gasStationValidFuels = builder.comment("If it starts with '#' it is a tag").defineList("machines.gas_station.valid_fuels", List.of("#car:gas_station", "immersiveengineering:biodiesel", "immersiveengineering:ethanol", "immersiveengineering:plantoil", "immersiveengineering:creosote"), Objects::nonNull);
 
         repairKitRepairAmount = builder.defineInRange("items.repair_kit.repair_amount", 5F, 0.1F, 100F);
@@ -94,9 +94,9 @@ public class ServerConfig extends ConfigBase {
         carOnroadSpeed = builder.comment("The speed modifier for cars on road blocks", "On road blocks are defined in the config section 'road_blocks'").defineInRange("car.onroad_speed_modifier", 1D, 0.001D, 10D);
         carDriveBlocks = builder.comment("If it starts with '#' it is a tag").defineList("car.road_blocks.blocks", Collections.singletonList("#car:drivable_blocks"), Objects::nonNull);
 
-        tankSmallMaxFuel = builder.defineInRange("car.parts.small_tank.max_fuel", 5000, 100, 100_000);
-        tankMediumMaxFuel = builder.defineInRange("car.parts.medium_tank.max_fuel", 10000, 100, 100_000);
-        tankLargeMaxFuel = builder.defineInRange("car.parts.large_tank.max_fuel", 15000, 100, 100_000);
+        tankSmallMaxFuel = builder.defineInRange("car.parts.small_tank.max_fuel", 25000, 100, 100_000);
+        tankMediumMaxFuel = builder.defineInRange("car.parts.medium_tank.max_fuel", 50000, 100, 100_000);
+        tankLargeMaxFuel = builder.defineInRange("car.parts.large_tank.max_fuel", 75000, 100, 100_000);
 
         engine6CylinderFuelEfficiency = builder.defineInRange("car.parts.engine_6_cylinder.fuel_efficiency", 0.49D, 0.001D, 10D);
         engine3CylinderFuelEfficiency = builder.defineInRange("car.parts.engine_3_cylinder.fuel_efficiency", 0.7D, 0.001D, 10D);

@@ -39,7 +39,7 @@ public abstract class EntityCarFuelBase extends EntityCarDamageBase implements I
 
     protected void fuelTick() {
         int fuel = getFuelAmount();
-        float fuelUsage = getFuelUsage(getFluid());
+        float fuelUsage = getFuelUsage(getFluid())*5; // x5 because tanks are made x5 bigger by default (25, 50 & 75 buckets)
         if(isAccelerating()){
             usage += fuelUsage;
         }else if(isStarted()){
